@@ -30,8 +30,6 @@ Example:
 sudo install -m 0755 nvme-exporter /usr/local/bin/nvme-exporter
 ```
 
-`jpetrucciani/nix` overlay packaging is planned after the first release.
-
 ## Running
 
 ```bash
