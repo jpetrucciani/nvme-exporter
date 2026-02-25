@@ -1,0 +1,24 @@
+[Unit]
+Description=NVMe Prometheus Exporter
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/nvme-exporter --listen-address 0.0.0.0:9998
+Restart=on-failure
+RestartSec=5
+
+User=nvme-exporter
+Group=nvme-exporter
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=no
+ProtectSystem=strict
+ProtectHome=yes
+DeviceAllow=/dev/nvme* r
+AmbientCapabilities=CAP_SYS_RAWIO
+CapabilityBoundingSet=CAP_SYS_RAWIO
+
+[Install]
+WantedBy=multi-user.target

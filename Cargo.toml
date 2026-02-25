@@ -1,0 +1,17 @@
+[package]
+name = "nvme-exporter"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Prometheus exporter for NVMe drive health metrics via direct ioctls"
+repository = "https://github.com/jacobi-io/nvme-exporter"
+
+[dependencies]
+axum = "0.8"
+clap = { version = "4", features = ["derive", "env"] }
+glob = "0.3"
+libc = "0.2"
+prometheus = { version = "0.13", default-features = false }
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "net", "signal"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt", "json"] }

@@ -1,0 +1,49 @@
+groups:
+  - name: nvme
+    rules:
+      - alert: NvmeDeviceUnhealthy
+        expr: nvme_healthy == 0
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "NVMe device {{ $labels.device }} is unhealthy"
+
+      - alert: NvmeSpareRunningLow
+        expr: nvme_available_spare_ratio < 0.2
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          summary: "NVMe {{ $labels.device }} spare capacity below 20%"
+
+      - alert: NvmeHighWear
+        expr: nvme_percentage_used_ratio > 0.9
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          summary: "NVMe {{ $labels.device }} wear level above 90%"
+
+      - alert: NvmeTemperatureWarning
+        expr: nvme_temperature_celsius > 70
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "NVMe {{ $labels.device }} temperature {{ $value }} C"
+
+      - alert: NvmeMediaErrors
+        expr: increase(nvme_media_errors_total[24h]) > 0
+        labels:
+          severity: critical
+        annotations:
+          summary: "NVMe {{ $labels.device }} has new media errors"
+
+      - alert: NvmeExporterDown
+        expr: up{job="nvme"} == 0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "NVMe exporter is down"
